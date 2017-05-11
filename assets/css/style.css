@@ -1,0 +1,19 @@
+.jumbotron {
+	text-align: center;
+}
+
+.col {
+	outline-style: solid;
+}
+
+.row {
+	margin-top: 20px;
+}
+#cuisineResultsForCity {
+	height:100px;
+  overflow-y: scroll;
+}
+
+.cuisineList, .restaurantList {
+	list-style:none;
+}
