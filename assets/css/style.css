@@ -3,15 +3,17 @@
 }
 
 .col {
-	outline-style: solid;
+	outline-style: none;
 }
 
 .row {
 	margin-top: 20px;
 }
 #cuisineResultsForCity {
-	height:100px;
+	height:300px;
+	width:80%;
   overflow-y: scroll;
+  border:2px;
 }
 
 .cuisineResult, .cuisineList, .restaurantList {
@@ -19,6 +21,41 @@
 }
 
 #mapOfRestaurants {
+	text-align:center;
         height: 400px;
         width: 100%;
+        border:2px;
        }
+#restaurantImage {
+	width:auto;
+	height:auto;
+}
+
+#resultsArea{
+	text-align:center;
+}
+
+#restaurantList {
+	height:300px;
+	overflow-y:scroll;
+	border:2px;
+}
+/*#resultsSection {
+	display:none;
+}*/
+
+.dropdown-menu {
+  border:none; 
+}
+
+.cuisines{
+ width: 70%;
+}
+.dropdown-toggle { 
+	border:none;  
+    overflow: hidden;
+    padding-right: 24px /* Optional for caret */;
+    text-align: left;
+    text-overflow: ellipsis;    
+    width: 70%;
+}

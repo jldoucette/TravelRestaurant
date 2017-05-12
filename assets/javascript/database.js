@@ -22,7 +22,7 @@
   });
 
   var nameInput="Guest";
-  var emailInput="no email";
+  var emailInput="not available or entered.";
   var data={};
   var searchedLocation={};
   var cityInput={};
@@ -49,7 +49,9 @@
   var restaurantCuisines;
   var distanceFromLocation=3219;
   var mapZoomRate=10;
-  var cuisineListAppend;  
+  var cuisineListAppend;
+  var resultsDesired=10; 
+  var zoomSetting=9; 
 
 
   searchData[nameInput]={
@@ -74,6 +76,7 @@ $("#submitUser").on("click", function(event) {
         $('#userName').val('');
         $('#email').val('');
         displaySearchHistory();
+        $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
 }
 else {
   console.log("Epic Fail");
@@ -115,11 +118,26 @@ function getRadioValue () {
         // Will get the newly selected value
         distanceFromLocation = getRadioValue();
         console.log("new input distance is "+distanceFromLocation);
+        if(distanceFromLocation==1609) {
+          zoomSetting=15;
+        }
+        else if(distanceFromLocation==3219) {
+          zoomSetting=14;
+        }
+        else if(distanceFromLocation==8047) {
+          zoomSetting=13;
+        }
+         else if(distanceFromLocation==32187) {
+          zoomSetting=12;
+        }
+        else {
+          zoomSetting=13;
+        }
     });
 
    $("#searchButton").on("click", function(event) {
       event.preventDefault();
-   
+    initializePreResults();
      searchedLocation= $("#cityInput").val().trim();
      console.log("City that was input "+ searchedLocation);
    
@@ -156,8 +174,7 @@ function getRadioValue () {
 function displaySearchHistory() {
    return firebase.database().ref('/citySearches/' + nameInput).limitToLast(3).once('value').then(function(snapshot) {
   
-        $("#userDetails").html("<h3>Welcome "+nameInput+" Email: "+emailInput+"</h3>" +
-            "<h4>Here are your last 3 searched locations</h4>");
+        // $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
         $("#searchedItemsList").empty();
             snapshot.forEach(function(childSnapshot) {
             var childKey = childSnapshot.key;
@@ -170,7 +187,9 @@ function displaySearchHistory() {
 });
   }
 function getCuisines() {
-  
+
+  $("#cuisineResultHeader").show();
+  $("#cuisineResultsForCity").show();
   console.log("getCuisines Lat "+locationLat);
   console.log("getCuisines Lon "+locationLon);
       zomatoSearchLocation="?lat="+locationLat+"&lon="+locationLon;
@@ -185,8 +204,8 @@ function getCuisines() {
 
             $("#cuisineResultsForCity").empty();
             cuisineListAppend="<div class='dropdown'>"+
-            "<button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown'>" +
-              "Choose One...<span class='caret'></span></button>"+
+            "<button class='btn btn-default dropdown-toggle cuisines' type='button' data-toggle='dropdown'>" +
+              "Choose One... <span class='caret'></span></button>"+
             "<ul class='dropdown-menu'>";
             console.log("First cuisineListAppend is: "+cuisineListAppend);
             // $("#cuisineResultsForCity").append("<div class='dropdown'>"+
@@ -207,6 +226,7 @@ function getCuisines() {
             cuisineListAppend+="</ul>"+"</div>";
             console.log("Last cuisineListAppend is "+cuisineListAppend);
             $("#cuisineResultsForCity").append(cuisineListAppend);
+            $("#cuisineResultsForCity").focus();
               });
            
             $('#cuisineResultsForCity').on('click', '.cuisineList',function(event) {  
@@ -219,6 +239,9 @@ function getCuisines() {
               cuisineID=$(this).attr('data-cuisineid');
               searchedLocation= $("#cityInput").val().trim();
               console.log("Selected Cuisine ID: "+cuisineID +" Selected Cuisine Name: "+cuisineName);
+              $("#processingMessage").empty().show();
+
+              $("#processingMessage").append("<h3><em>Processing Results for "+cuisineName+"...</em></h3>");
               runZomatoLatLon();
             });
         return
@@ -228,7 +251,7 @@ function runZomatoLatLon() {
   console.log("runZomato Lat "+ locationLat);
   console.log("runZomato Lon "+ locationLon);
 $.ajax({
-    url: 'https:developers.zomato.com/api/v2.1/search?count=5&lat='+locationLat+'&lon='+locationLon+'&cuisines='+cuisineID+'&sort=rating&order=desc&radius='+distanceFromLocation,
+    url: 'https:developers.zomato.com/api/v2.1/search?count='+resultsDesired+'&lat='+locationLat+'&lon='+locationLon+'&cuisines='+cuisineID+'&sort=rating&order=desc&radius='+distanceFromLocation,
     method: 'GET',
     beforeSend: function(request) {
     request.setRequestHeader('user-key', '0479a7ed872a00d5eefcde91517a433d');
@@ -236,18 +259,23 @@ $.ajax({
 
 }).done(function(response) {
   console.log(response);
+   $("#resultsArea").show();
+   $("#restaurantList").show();
+   $("#mapOfRestaurants").show();
    $("#restaurantList").empty();
-   $("#restaurantList").append("<h4>Restaurant Results</h4><br><ol>");
+   $("#processingMessage").empty().hide();
+   $("#restaurantList").focus();
+   $("#restaurantList").append("<h4>Top "+resultsDesired+" Restaurant Results</h4><br><ol>");
         console.log("initMap started locationLat "+ locationLat + " locationLon "+ locationLon);
         var cityLocation = {lat: locationLat, lng: locationLon};
         var map = new google.maps.Map(document.getElementById('mapOfRestaurants'), {
-          zoom: 15,
+          zoom: zoomSetting,
           center: cityLocation
         });
         var marker = new google.maps.Marker({
           position: cityLocation,
           map: map,
-          label: 'You'
+          label: 'X'
         });
 
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -308,6 +336,27 @@ $.ajax({
 var geocoder;
   function initialize() {
     geocoder = new google.maps.Geocoder();
+    $("#restaurantList").hide();
+    $("#mapOfRestaurants").hide();
+    $("#resultsArea").hide();
+    $("#cuisineResultsForCity").hide();
+    $("#cuisineResultHeader").hide();
+
+}
+
+  function initializePreResults() {
+
+    $("#restaurantList").empty();
+    $("#mapOfRestaurants").empty();
+    $("#resultsArea").empty();
+    $("#cuisineResultsForCity").empty();
+    // $("#cuisineResultHeader").empty();
+    $("#restaurantList").hide();
+    $("#mapOfRestaurants").hide();
+    $("#resultsArea").hide();
+    $("#cuisineResultsForCity").hide();
+    // $("#cuisineResultHeader").hide();
+
 }
 
 function codeAddress() {
