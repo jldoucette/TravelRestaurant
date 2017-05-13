@@ -51,7 +51,7 @@
   var mapZoomRate=10;
   var cuisineListAppend;
   var resultsDesired=10; 
-  var zoomSetting=9; 
+  var zoomSetting=14; 
 
 
   searchData[nameInput]={
@@ -76,11 +76,11 @@ $("#submitUser").on("click", function(event) {
         $('#userName').val('');
         $('#email').val('');
         displaySearchHistory();
-        $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
+        $("#userDetails").html("<h2>Welcome "+nameInput+"! <small>Your registered email is "+emailInput+"</small></h2>");
 }
 else {
   console.log("Epic Fail");
-  $("#invalidUser").prepend("<h2>Invalid Username or email, no special characters allowed</h2>"); 
+  $("#invalidUser").prepend("<h4>Invalid Username or email, no special characters allowed</h4>"); 
         setTimeout(function() {
           console.log("continue after timer");
           $("#invalidUser").empty();
@@ -131,7 +131,7 @@ function getRadioValue () {
           zoomSetting=12;
         }
         else {
-          zoomSetting=13;
+          zoomSetting=14;
         }
     });
 
@@ -155,8 +155,8 @@ function getRadioValue () {
 
       else {
         console.log("Does NOT match RegEx: False");
-        $("#errorMessage").prepend("<h2>Invalid Search item, try again!</h2>" 
-          + "<h3>Hint: Only letters allowed, no special characters</h3>");
+        $("#errorMessage").prepend("<h4>Invalid Search item, try again!</h4>" 
+          + "<h5>Hint: Only letters allowed, no special characters</h5>");
         setTimeout(function() {
           console.log("continue after timer");
           $("#errorMessage").empty();
@@ -261,11 +261,14 @@ $.ajax({
   console.log(response);
    $("#resultsArea").show();
    $("#restaurantList").show();
+   $("#restaurantListHeader").show();
+   $("#mapOfRestaurantsHeader").show();
    $("#mapOfRestaurants").show();
    $("#restaurantList").empty();
+   $("#restaurantListHeader").empty();   
    $("#processingMessage").empty().hide();
    $("#restaurantList").focus();
-   $("#restaurantList").append("<h4>Top "+resultsDesired+" Restaurant Results</h4><br><ol>");
+   $("#restaurantListHeader").append("<h4>Top "+resultsDesired+" "+ cuisineName+" Restaurant Results (If necessary, please scroll down for full list!)</h4><ol>");
         console.log("initMap started locationLat "+ locationLat + " locationLon "+ locationLon);
         var cityLocation = {lat: locationLat, lng: locationLon};
         var map = new google.maps.Map(document.getElementById('mapOfRestaurants'), {
@@ -341,6 +344,8 @@ var geocoder;
     $("#resultsArea").hide();
     $("#cuisineResultsForCity").hide();
     $("#cuisineResultHeader").hide();
+    $("#restaurantListHeader").hide();
+    $("#mapOfRestaurantsHeader").hide();
 
 }
 
@@ -350,11 +355,14 @@ var geocoder;
     $("#mapOfRestaurants").empty();
     $("#resultsArea").empty();
     $("#cuisineResultsForCity").empty();
+    $("#restaurantListHeader").empty();
     // $("#cuisineResultHeader").empty();
     $("#restaurantList").hide();
     $("#mapOfRestaurants").hide();
     $("#resultsArea").hide();
     $("#cuisineResultsForCity").hide();
+    $("#restaurantListHeader").hide();
+    $("#mapOfRestaurantsHeader").hide();
     // $("#cuisineResultHeader").hide();
 
 }

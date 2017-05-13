@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Taviraj:400,400i,700,700i" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -15,7 +16,7 @@
     	<div class="row">
     	<div class="col-md-6">
 		<div id="siteIntro">
-		<h3 id="introText">This site allows you to search major US cities and search local restaurants by cuisine type, providing a list sorted by rating and displayed on a map. A link to the menu is provided and you can add the restaurants to a city list which is tied to your username and email and displayed upon login! The Top 10 Restaurants are displayed, based on the distance you are willing to travel.<br><br><strong><em>Enjoy the Experience!</em></strong></h3> 
+		<h3 id="introText">This site allows you to search major US cities and search local restaurants by cuisine type, providing a list sorted by rating and displayed on a map. A link to the menu is provided and you can add the restaurants to a city list which is tied to your username and email and displayed upon login! The Top 10 Restaurants are displayed (or less than 10 if the selection or range is limited), based on the distance you are willing to travel.<br><br><strong><em>Enjoy the Experience!</em></strong></h3> 
 		</div>
 		</div>
 		<div class="col-md-6">
@@ -32,59 +33,66 @@
 				<div id="cityToDoList">
 				</div> -->
 			<div id="invalidUser"></div>
+
 			  <div class="form-group">
 			    <label for="userInput">Your Username</label>
 			    <input type="text" class="form-control" id="userName" placeholder="Username">
 			  </div>
+	
 			  <div class="form-group">
 			    <label for="userInput">Your Email Address</label>
 			    <input type="text" class="form-control" id="email" placeholder="email address">
 			  </div>			  
 				<button type="submit" class="btn btn-default" id="submitUser"> Submit</button>
-			</div>			
-			<div class="col-md-8 col">
-			<div class="row">
-			<div class="col-md-12 col">
-			<div id="errorMessage">
 			</div>
-			  	<label for="cityInput">Which Location Should We Search For Nearby Restaurants? </label>
-				<div class="input-group">
-				   	<input type="text" class="form-control" id="cityInput" placeholder="Input Address, Landmark or City here">
-				   	<span class="input-group-btn">
-				        <button class="btn btn-default" type="button" id="searchButton">Search</button>
-				    </span>
-				    
-				</div>			  
-			</div>
-			</div>
-	
-		<div class="row">
-			<div class="col-md-12 col">
-				<div class="radio-inline distance" id="selectDistance">
-				    <label>
-				    <input type="radio" class="selectDistance" name="distance" value="1609">Within 1 Mile</label>
-				    </div>
-				    <div class="radio-inline distance">
-				    <label>
-				    <input type="radio" class="selectDistance" name="distance" checked=true value="3219">Within 2 Miles</label>
-				    </div>
-				    <div class="radio-inline distance">
-				    <label>
-				    <input type="radio" class="selectDistance" name="distance" value="8047">Within 5 Miles</label>
-				    </div>
-				     <div class="radio-inline distance">
-				    <label>
-				    <input type="radio" class="selectDistance" name="distance" value="32187">Within 20 Miles</label>
-				    </div>
-			    </div>
-		    </div>
-		    <div class="row">
-		    	<div class="col-md-8 col col-md-offset-1">
-		    		<div id="userDetails"></div>
-		    	</div>
-		    </div>
+		
+				<div class="col-md-8 col">
+					<div class="row">
+						<div class="col-md-12 col">
+							<!-- 
+							  	<div class="row"> -->
+		    						<!-- <div class="col-md-10 col col-md-offset-1"> -->
+		    							<div id="userDetails"></div>
+		    					<!-- 	</div> -->
+		    				<!-- 	</div> -->
+		    					<div id="errorMessage"></div>
+						
+						  	<label for="cityInput">Which Location Should We Search For Nearby Restaurants? </label>
+								<div class="input-group">
+								   	<input type="text" class="form-control" id="cityInput" placeholder="Please Input Your Search Address Here">
+								   	<span class="input-group-btn">
+								        <button class="btn btn-default" type="button" id="searchButton">Search</button>
+								    </span>   
+								</div>			  
+						</div>
+					</div>
+		
+						<div class="row">
+							<div class="col-md-12 col">
+								<div class="radio-inline distance" id="selectDistance">
+								    <label>
+								    <input type="radio" class="selectDistance" name="distance" value="1609">Within 1 Mile</label>
+								    </div>
+								    <div class="radio-inline distance">
+								    <label>
+								    <input type="radio" class="selectDistance" name="distance" checked=true value="3219">Within 2 Miles</label>
+								    </div>
+								    <div class="radio-inline distance">
+								    <label>
+								    <input type="radio" class="selectDistance" name="distance" value="8047">Within 5 Miles</label>
+								    </div>
+								     <div class="radio-inline distance">
+								    <label>
+								    <input type="radio" class="selectDistance" name="distance" value="32187">Within 20 Miles</label>
+								    </div>
+							    </div>
+					    </div>
+			  
+
+		  
+		      </div>
 	    </div>
-	    </div>
+
 
 		
 		<div id="resultsSection">
@@ -106,6 +114,7 @@
 
 
 			<div class="col-md-8 col">
+				<div id="restaurantListHeader"></div>
 				<div id="restaurantList">
 					<h3>Restaurant Options</h3>
 				</div>
@@ -115,8 +124,11 @@
 
 		<div class="row">
 			<div class="col-md-10 col">
+				<div id="mapOfRestaurantsHeader">
+				<h3>Mapped Results <small>(X is your location - use map tools to zoom in or out to see all locations if necessary!)</small></h3>
+				</div>
 				<div id="mapOfRestaurants">
-					<h3>Mapped Results</h3>
+
 				</div>
 			</div>
 			<!-- <div class="col-md-4 col col-md-offset-2">

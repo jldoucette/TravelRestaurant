@@ -1,5 +1,12 @@
+body {
+font-family: 'Taviraj', Helvetica, sans-serif;
+background-color: #fff8dc;
+
+}
+
 .jumbotron {
-	text-align: center;
+text-align: center;
+background-color: #add8e6;
 }
 
 .col {
@@ -12,20 +19,34 @@
 #cuisineResultsForCity {
 	height:300px;
 	width:80%;
-  overflow-y: scroll;
-  border:2px;
+  	overflow-y: scroll;
+  	border:2px;
+
+
 }
 
 .cuisineResult, .cuisineList, .restaurantList {
 	list-style:none;
 }
 
+#mapOfRestaurantsHeader {
+	text-align:center;
+background-color:#fffaf0;
+padding:20px;
+margin-left:20px;
+width:100%;
+}
+
 #mapOfRestaurants {
 	text-align:center;
-        height: 400px;
-        width: 100%;
-        border:2px;
-       }
+    height: 500px;
+    width: 100%;
+    border:1px;
+    border-style:solid;
+    margin:20px;
+    margin-bottom:50px;
+    background-color:#fffaf0;
+   }
 #restaurantImage {
 	width:auto;
 	height:auto;
@@ -35,22 +56,37 @@
 	text-align:center;
 }
 
+#restaurantListHeader {
+	background-color:#fffaf0;
+	padding:5px;
+}
+
+#cuisineResultHeader {
+background-color:#fffaf0;
+}
+
+
+
 #restaurantList {
 	height:300px;
 	overflow-y:scroll;
 	border:2px;
+	background-color:#fffaf0;
 }
+
 /*#resultsSection {
 	display:none;
 }*/
 
 .dropdown-menu {
-  border:none; 
+  	border:none;
+	background-color: #fffaf0; 
 }
 
 .cuisines{
  width: 70%;
 }
+
 .dropdown-toggle { 
 	border:none;  
     overflow: hidden;
@@ -58,4 +94,15 @@
     text-align: left;
     text-overflow: ellipsis;    
     width: 70%;
+}
+
+#siteIntro {
+	padding:20px;
+	background-color: #f08080;	
+}
+
+.searchSection {
+	background-color:#e0ffff;
+	padding:10px;
+
 }
