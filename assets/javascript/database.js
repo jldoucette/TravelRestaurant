@@ -371,7 +371,9 @@ function codeAddress() {
     console.log("Start codeAddress");
     var address = searchedLocation;
     geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == 'OK') {
+      console.log("Status "+status);
+      console.log("results "+results);
+      if ((status == 'OK') && (results[0].geometry.location_type!='APPROXIMATE')) {
         console.log(status);
         console.log(results); 
         locationLat=results[0].geometry.bounds.f.f;
@@ -381,11 +383,19 @@ function codeAddress() {
         getCuisines();
         console.log("Ran getCuisines from codeAddress");
       }
-      
-      else {
-        alert('Geocode was not successful for the following reason: ' + status);
+       else {
+        console.log("No address found in codeAddress");
+        $("#errorMessage").prepend("<h4>No results found using that address, try again!</h4>" 
+          + "<h5>Hint: Try a more specific, valid address</h5>");
+        setTimeout(function() {
+          console.log("continue after timer");
+          $("#errorMessage").empty();
+          $('#cityInput').val(''); 
+        }, 5000);
+      // else {
+      //   alert('Geocode was not successful for the following reason: ' + status);
+      // }
       }
- 
     });
 
   }
