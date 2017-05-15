@@ -4,6 +4,17 @@ background-color: #fff8dc;
 
 }
 
+.img {
+    position: relative;
+    float: right;
+    align-items:center;
+    width:  555px;
+    height: 355px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}
+
 .jumbotron {
 text-align: center;
 background-color: #add8e6;
