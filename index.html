@@ -10,177 +10,157 @@
 </head>
 <body>
 	<div class="container">
-	 	<div class="jumbotron">
-	    	<h1>Where Should I Eat?</h1> 
-    	</div>
-    	<div class="row">
-	    	<div class="col-md-6">
-				<div id="siteIntro">
-					<h3 id="introText">This site allows you to search major US and European cities and search local restaurants by cuisine type, providing a list sorted by rating and displayed on a map. A link to the menu is provided and you can add the restaurants to a list which is tied to your username and email and displayed upon login. The Top 10 Restaurants are displayed (or less than 10 if the selection or range is limited), based on the distance you are willing to travel.<br><br><strong><em>Enjoy the Experience!</em></strong></h3> 
-				</div>
-			</div>
-<!-- 		<div class="col-md-6"> -->
-		<!-- <div id="restaurantImage">
-		<img src="./assets/images/genericrestaurant.jpg" alt="Restaurant Image">
-		</div> -->
-		
-
-<!-- <div class="container"> -->
-	<div class="col col-md-6">
-		<div id="myCarousel" class="carousel carousel-slide" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-					<li data-target="#myCarousel" data-slide-to="3"></li>
-				</ol>
-				<div class="carousel-inner">
-					<div class="item active">
-						<img class="img-responsive center-block" src="assets/images/katzdeli.jpg" alt="Random Food Picture 1">
-					</div>	
-					<div class="item">
-						<img class ="img-responsive center-block" src="assets/images/legorestaurant.jpg" alt="Random Food Picture 2">
-					</div>	
-					<div class="item">
-						<img class ="img-responsive center-block" src="assets/images/nycrestaurant.jpg" alt="Random Food Picture 3">
-					</div>	
-					<div class="item">
-						<img class ="img-responsive center-block" src="assets/images/tomsrestaurantnyc.jpg" alt="Random Food Picture 4">
-					</div>	
-				</div>
-				<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-					<span class="glyphicon glyphicon-chevron-left"></span>
-				</a>
-				<a class="right carousel-control" href="#myCarousel" data-slide="next">
-					<span class="glyphicon glyphicon-chevron-right"></span>
-				</a>	
-		</div>
-	</div>
-</div>
-
-
-	
-<!-- </div> -->
-
-		<div class="row">
-			<div class="col-md-4 col">
-	<!-- 			<div id="userDetails">
-				</div> -->
-				
-			<!-- 	<div id="cityToDoList"> -->
-	
-			<div id="invalidUser"></div>
-	<!-- 		<div class="well"> -->
-			  <div class="form-group">
-			    <label for="userInput">Your Username</label>
-			    <input type="text" class="form-control" id="userName" placeholder="Username">
-			  </div>
-	
-			  <div class="form-group">
-			    <label for="userInput">Your Email Address</label>
-			    <input type="text" class="form-control" id="email" placeholder="email address">
-			  </div>
-			  <br>			  
-				<button type="submit" class="btn btn-default" id="submitUser"> Submit</button>
-						<div id="searchedItemsHeader"></div>
-						<div id="searchedItemsList"></div>
-			<!-- 	<div id="cityToDoList"> -->	
-			</div>
-<!-- 			</div> -->
-		
-				<div class="col-md-8 col">
-					<div class="row">
-						<div class="col-md-12 col">
-							<!-- 
-							  	<div class="row"> -->
-		    						<!-- <div class="col-md-10 col col-md-offset-1"> -->
-		    							<div id="userDetails" class="well well-sm"><h2><em>Welcome to the site! Login to the left to save searches.</em></h2></div>
-		    					<!-- 	</div> -->
-		    				<!-- 	</div> -->
-		    					<div id="errorMessage"></div>
-						
-						  	<label for="cityInput">Which Location Should We Search For Nearby Restaurants? </label>
-								<div class="input-group">
-								   	<input type="text" class="form-control" id="cityInput" placeholder="Please Input Your Search Address Here">
-								   	<span class="input-group-btn">
-								        <button class="btn btn-default" type="button" id="searchButton">Search</button>
-								    </span>   
-								</div>			  
-						</div>
+		 	<div class="jumbotron">
+		    	<h1>Where Should I Eat?</h1> 
+	    	</div>
+	    	<div class="row">
+		    	<div class="col-md-6">
+					<div id="siteIntro">
+						<h3 id="introText">This site allows you to search major US and European cities and search local restaurants by cuisine type, providing a list sorted by rating and displayed on a map. A link to the menu is provided and you can add the restaurants to a list which is tied to your username and email and displayed upon login. The Top 10 Restaurants are displayed (or less than 10 if the selection or range is limited), based on the distance you are willing to travel.<br><br><strong><em>Enjoy the Experience!</em></strong></h3> 
 					</div>
-		
+				</div>
+			
+			<div class="col col-md-6">
+				<div id="myCarousel" class="carousel carousel-slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+							<li data-target="#myCarousel" data-slide-to="3"></li>
+						</ol>
+						<div class="carousel-inner">
+							<div class="item active">
+								<img class="img-responsive center-block" src="assets/images/katzdeli.jpg" alt="Random Food Picture 1">
+							</div>	
+							<div class="item">
+								<img class ="img-responsive center-block" src="assets/images/legorestaurant.jpg" alt="Random Food Picture 2">
+							</div>	
+							<div class="item">
+								<img class ="img-responsive center-block" src="assets/images/nycrestaurant.jpg" alt="Random Food Picture 3">
+							</div>	
+							<div class="item">
+								<img class ="img-responsive center-block" src="assets/images/tomsrestaurantnyc.jpg" alt="Random Food Picture 4">
+							</div>	
+						</div>
+						<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left"></span>
+						</a>
+						<a class="right carousel-control" href="#myCarousel" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right"></span>
+						</a>	
+				</div>
+			</div>
+		</div>
+
+			<div class="row">
+				<div class="col-md-4 col">
+					<div id="invalidUser"></div>
+					  <div class="form-group">
+					    <label for="userInput">Your Username</label>
+					    <input type="text" class="form-control" id="userName" placeholder="Username">
+					  </div>
+			
+					  <div class="form-group">
+					    <label for="userInput">Your Email Address</label>
+					    <input type="text" class="form-control" id="email" placeholder="email address">
+					  </div>
+					  <br>			  
+						<button type="submit" class="btn btn-default" id="submitUser"> Submit</button>
+								<div id="searchedItemsHeader"></div>
+								<div id="searchedItemsList"></div>
+
+					</div>
+			
+					<div class="col-md-8 col">
 						<div class="row">
 							<div class="col-md-12 col">
-								<div class="radio-inline distance" id="selectDistance">
-								    <label>
-								    <input type="radio" class="selectDistance" name="distance" value="1609">Within 1 Mile</label>
-								    </div>
-								    <div class="radio-inline distance">
-								    <label>
-								    <input type="radio" class="selectDistance" name="distance" checked=true value="3219">Within 2 Miles</label>
-								    </div>
-								    <div class="radio-inline distance">
-								    <label>
-								    <input type="radio" class="selectDistance" name="distance" value="8047">Within 5 Miles</label>
-								    </div>
-								     <div class="radio-inline distance">
-								    <label>
-								    <input type="radio" class="selectDistance" name="distance" value="32187">Within 20 Miles</label>
-								    </div>
-							    </div>
-					    </div>
-			  
-
-		  
-		      </div>
-	    </div>
-
-
+								
+			    							<div id="userDetails" class="well well-sm"><h2><em>Welcome to the site! Login to the left to save searches.</em></h2></div>
 		
-		<div id="resultsSection">
-		<div class="row">
-		<div id="resultsArea">
-		<span><h2>Here's your results!</h2></span>
-		</div>
-			<div class="col-md-3 col">
-					<div id="cuisineResultHeader">
-					<h4>List of Cuisines Available</h4>
-					<h6><em>Note: This list of Cuisines is Regionwide! Not all Cuisines may be within the range selected. If you don't get any results on your search, search again for a different Cuisine or larger radius!</em><h6>
+			    					<div id="errorMessage"></div>
+							
+							  	<label for="cityInput">Which Location Should We Search For Nearby Restaurants? </label>
+									<div class="input-group">
+									   	<input type="text" class="form-control" id="cityInput" placeholder="Please Input Your Search Address Here">
+									   	<span class="input-group-btn">
+									        <button class="btn btn-default" type="button" id="searchButton">Search</button>
+									    </span>   
+									</div>			  
+							</div>
+						</div>
+			
+							<div class="row">
+								<div class="col-md-12 col">
+									<div class="radio-inline distance" id="selectDistance">
+									    <label>
+									    <input type="radio" class="selectDistance" name="distance" value="1609">Within 1 Mile</label>
+									    </div>
+									    <div class="radio-inline distance">
+									    <label>
+									    <input type="radio" class="selectDistance" name="distance" checked=true value="3219">Within 2 Miles</label>
+									    </div>
+									    <div class="radio-inline distance">
+									    <label>
+									    <input type="radio" class="selectDistance" name="distance" value="8047">Within 5 Miles</label>
+									    </div>
+									     <div class="radio-inline distance">
+									    <label>
+									    <input type="radio" class="selectDistance" name="distance" value="32187">Within 20 Miles</label>
+									    </div>
+								    </div>
+						    </div>
+				  
+
+			  
+			      </div>
+		    </div>
+
+
+			
+			<div id="resultsSection">
+				<div class="row">
+					<div id="resultsArea">
+						<span><h2>Here's your results!</h2></span>
 					</div>
-				<div id="processingMessage">
-				</div>
-				<div id="cuisineResultsForCity">	
+
+					<div class="col-md-3 col">
+							<div id="cuisineResultHeader">
+							<h4>List of Cuisines Available</h4>
+							<h6><em>Note: This list of Cuisines is Regionwide! Not all Cuisines may be within the range selected. If you don't get any results on your search, search again for a different Cuisine or larger radius!</em><h6>
+							</div>
+						
+							<div id="processingMessage">
+							</div>
+
+							<div id="cuisineResultsForCity">	
+							</div>
+
+					</div>
+
+
+					<div class="col-md-8 col">
+							<div id="restaurantListHeader"></div>
+
+							<div id="restaurantList">
+								<h3>Restaurant Options</h3>
+							</div>
+					</div>
 				</div>
 
+
+				<div class="row">
+					<div class="col-md-10 col">
+						<div id="mapOfRestaurantsHeader">
+						<h3>Mapped Results <small>(X is your location - use map tools to zoom in or out to see all locations if necessary!)</small></h3>
+						</div>
+						<div class="well" id="mapOfRestaurants">
+
+						</div>
+					</div>
+				</div>  		    	
 			</div>
-
-
-			<div class="col-md-8 col">
-				<div id="restaurantListHeader"></div>
-				<div id="restaurantList">
-					<h3>Restaurant Options</h3>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="row">
-			<div class="col-md-10 col">
-				<div id="mapOfRestaurantsHeader">
-				<h3>Mapped Results <small>(X is your location - use map tools to zoom in or out to see all locations if necessary!)</small></h3>
-				</div>
-				<div class="well" id="mapOfRestaurants">
-
-				</div>
-			</div>
-			<!-- <div class="col-md-4 col col-md-offset-2">
-				<div id="searchedLocations">
-					Locations Searched
-				</div>
-			</div> -->
-		</div>  		    	
-		</div>
 	</div>
+	
 <div class="modal fade" id="noAddressModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -321,11 +301,12 @@
 </div> 
 
 </body>
+
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src = assets/javascript/database_new.js></script>
+<script src = assets/javascript/database.js></script>
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyC0AoLNlLPPm7MniMZydMwrzKAjhMcT-QE"></script>
 </html>
