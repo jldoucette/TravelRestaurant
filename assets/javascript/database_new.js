@@ -205,7 +205,7 @@ function getRadioValue () {
 
 function displaySearchHistory() {
    return firebase.database().ref('/citySearches/' + nameInput).once('value').then(function(snapshot) {
-  
+        
         // $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
         $("#searchedItemsList").empty();
         $("#searchedItemsHeader").empty();
@@ -272,7 +272,11 @@ function getCuisines() {
             cuisineListAppend+="</ul>"+"</div>";
             console.log("Last cuisineListAppend is "+cuisineListAppend);
             $("#cuisineResultsForCity").append(cuisineListAppend);
-            $("#cuisineResultsHeader").focus();
+            $('html, body').animate({
+            scrollTop: $("#cuisineResultsForCity").offset().top
+            }, 1000);
+
+            // $("#cuisineResultsHeader").focus();
               });
            
             $('#cuisineResultsForCity').on('click', '.cuisineList',function(event) {  
@@ -521,16 +525,28 @@ function codeAddress() {
 
 
               addTime=moment().format(); 
-              database.ref("/citySearches/"+nameInput).push({
-              restaurantID:dataRestID,
-              restaurantName:listRestaurantName,
-              restaurantAddress:listRestaurantAddress,
-              restaurantCity:listRestaurantCity,
-              restaurantCuisines:listRestaurantCuisines,
-              restaurantMenuURL:listRestaurantMenuURL,
-              restaurantRating:listRestaurantRating,
-              timeStamp:addTime
-              }); 
+                  searchData[dataRestID]={
+                  restaurantID:dataRestID,
+                  restaurantName:listRestaurantName,
+                  restaurantAddress:listRestaurantAddress,
+                  restaurantCity:listRestaurantCity,
+                  restaurantCuisines:listRestaurantCuisines,
+                  restaurantMenuURL:listRestaurantMenuURL,
+                  restaurantRating:listRestaurantRating,
+                  timeStamp:addTime
+      };
+              // database.ref("/citySearches/"+nameInput+"/restaurantID/"+dataRestID).push({
+              database.ref("/citySearches/"+nameInput).update(searchData);//{
+              // restaurantID:dataRestID, 
+              // restaurantName:listRestaurantName,
+              // restaurantAddress:listRestaurantAddress,
+              // restaurantCity:listRestaurantCity,
+              // restaurantCuisines:listRestaurantCuisines,
+              // restaurantMenuURL:listRestaurantMenuURL,
+              // restaurantRating:listRestaurantRating,
+              // timeStamp:addTime
+              //}
+
               displaySearchHistory();
 
           });
@@ -544,14 +560,16 @@ function codeAddress() {
     selectedRestaurant=this;
     console.log("Clicked Button");
     var dataRestID=$(this).attr("data-restid"); 
-    console.log("dataRestID "+ dataRestID);   
+    console.log("dataRestID "+ dataRestID);  
+   fbRestID=dataRestID
 
 return firebase.database().ref('/citySearches/' + nameInput).once('value').then(function(snapshot) {
-  
+        console.log("Firebase result" + snapshot);
         // $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
         // $("#searchedItemsList").empty();
         // $("#searchedItemsHeader").empty();
         // $("#searchedItemsHeader").append("<h4>List of Saved Restaurants</h4>");
+       
             snapshot.forEach(function(childSnapshot) {
             storedRestaurantID=childSnapshot.val().restaurantID,
             storedRestaurantName=childSnapshot.val().restaurantName,
@@ -594,8 +612,7 @@ return firebase.database().ref('/citySearches/' + nameInput).once('value').then(
           }
 
         // $("#searchedItemsList").prepend("<ul><a class='listRestID' href'#' data-restid='"+storedRestaurantID+"'>"+storedRestaurantCity+": "+storedRestaurantName+"</a></ul>");
-    });  
- 
+    }); 
 });
 });
 

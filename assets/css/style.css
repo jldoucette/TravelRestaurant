@@ -118,3 +118,13 @@ background-color:#fffaf0;
 	padding:10px;
 }
 
+#searchedItemsList {
+	width:90%;
+	text-align:left;
+	background-color:#F0E68C
+}
+
+#userDetails {
+	text-align:top;
+background-color:#F0E68C;
+}
