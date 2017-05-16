@@ -36,16 +36,16 @@
 				</ol>
 				<div class="carousel-inner">
 					<div class="item active">
-						<img class ="img" src="assets/images/katzdeli.jpg" alt="Random Food Picture 1">
+						<img class="img-responsive center-block" src="assets/images/katzdeli.jpg" alt="Random Food Picture 1">
 					</div>	
 					<div class="item">
-						<img class ="img" src="assets/images/legorestaurant.jpg" alt="Random Food Picture 2">
+						<img class ="img-responsive center-block" src="assets/images/legorestaurant.jpg" alt="Random Food Picture 2">
 					</div>	
 					<div class="item">
-						<img class ="img" src="assets/images/nycrestaurant.jpg" alt="Random Food Picture 3">
+						<img class ="img-responsive center-block" src="assets/images/nycrestaurant.jpg" alt="Random Food Picture 3">
 					</div>	
 					<div class="item">
-						<img class ="img" src="assets/images/tomsrestaurantnyc.jpg" alt="Random Food Picture 4">
+						<img class ="img-responsive center-block" src="assets/images/tomsrestaurantnyc.jpg" alt="Random Food Picture 4">
 					</div>	
 				</div>
 				<a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -178,7 +178,97 @@
 		</div>  		    	
 		</div>
 	</div>
+<div class="modal fade" id="noAddressModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+					</button>
+					<h4 class="modal-title">Oops! The Address Was Not Found!</h4>
+				</div>
 
+				<div class="modal-body" id="noAddMdl">
+					<p>Unfortnuately, the addresss you searched for was not found. </p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+</div>
+
+<div class="modal fade" id="badUserPassModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+					</button>
+					<h4 class="modal-title">Oops! The Username/email Is Invalid</h4>
+				</div>
+
+				<div class="modal-body" id="badUserPassMdl">
+					<p>Unfortnuately, the username or email address you used is in an invalid format. </p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+</div>
+
+<div class="modal fade" id="badSearchModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+					</button>
+					<h4 class="modal-title">Oops! The Address is Invalid!</h4>
+				</div>
+
+				<div class="modal-body" id="badSearchMdl">
+					<p>Unfortnuately, the address you searched for is invalid. </p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+</div>
+
+<div class="modal fade" id="noResultsModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+					</button>
+					<h4 class="modal-title">Oops! No restaurants found!</h4>
+				</div>
+
+				<div class="modal-body" id="noResultsMdl">
+					<p>Unfortnuately, there are no restaurants serving that cuisine within your search area. </p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+</div>
   
 </body>
 <script
@@ -186,6 +276,6 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src = assets/javascript/database.js></script>
+<script src = assets/javascript/database_new.js></script>
 <script src="http://maps.google.com/maps/api/js?key=AIzaSyC0AoLNlLPPm7MniMZydMwrzKAjhMcT-QE"></script>
 </html>

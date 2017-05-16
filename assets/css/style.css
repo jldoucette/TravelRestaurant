@@ -1,18 +1,19 @@
 body {
 font-family: 'Taviraj', Helvetica, sans-serif;
 background-color: #fff8dc;
+margin-left:10px;
 
 }
 
 .img {
     position: relative;
-    float: right;
     align-items:center;
     width:  555px;
     height: 355px;
     background-position: 50% 50%;
     background-repeat:   no-repeat;
     background-size:     cover;
+
 }
 
 .jumbotron {
@@ -29,7 +30,7 @@ background-color: #add8e6;
 }
 #cuisineResultsForCity {
 	height:300px;
-	width:80%;
+	width:60%;
   	overflow-y: scroll;
   	border:2px;
 
@@ -58,10 +59,10 @@ width:100%;
     margin-bottom:50px;
     background-color:#fffaf0;
    }
-#restaurantImage {
+/*#restaurantImage {
 	width:auto;
 	height:auto;
-}
+}*/
 
 #resultsArea{
 	text-align:center;
@@ -115,5 +116,5 @@ background-color:#fffaf0;
 .searchSection {
 	background-color:#e0ffff;
 	padding:10px;
-
 }
+
