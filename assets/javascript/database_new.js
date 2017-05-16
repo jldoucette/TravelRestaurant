@@ -88,8 +88,10 @@ $("#submitUser").on("click", function(event) {
       database.ref("/users").update(data); 
         $('#userName').val('');
         $('#email').val('');
+        $("#searchedItemsHeader").show();
         displaySearchHistory();
         $("#userDetails").html("<h2>Welcome "+nameInput+"! <small>Your registered email is "+emailInput+"</small></h2>");
+        
 }
 else {
   console.log("Epic Fail");
@@ -232,7 +234,6 @@ function displaySearchHistory() {
 }
 
 function getCuisines() {
-
   $("#cuisineResultHeader").show();
   $("#cuisineResultsForCity").show();
   console.log("getCuisines Lat "+locationLat);
@@ -271,7 +272,7 @@ function getCuisines() {
             cuisineListAppend+="</ul>"+"</div>";
             console.log("Last cuisineListAppend is "+cuisineListAppend);
             $("#cuisineResultsForCity").append(cuisineListAppend);
-            $("#cuisineResultsForCity").focus();
+            $("#cuisineResultsHeader").focus();
               });
            
             $('#cuisineResultsForCity').on('click', '.cuisineList',function(event) {  
@@ -419,6 +420,7 @@ var geocoder;
     $("#cuisineResultHeader").hide();
     $("#restaurantListHeader").hide();
     $("#mapOfRestaurantsHeader").hide();
+    $("#searchedItemsHeader").hide();
 
 }
 
@@ -478,6 +480,15 @@ function codeAddress() {
 
   $("#restaurantList").on("click", ".addButton", function(event) {
       event.preventDefault();
+
+      if(nameInput=="Guest") {
+        $("#noLoginModal").modal('show');
+        console.log("Must be logged in to add restaurants.");
+      }
+      else {
+
+
+
     selectedRestaurant=this;
     console.log("Clicked Button");
     var dataRestID=$(this).attr("data-restaurantid"); 
@@ -523,8 +534,9 @@ function codeAddress() {
               displaySearchHistory();
 
           });
-
+}
         });
+
 
 
   $("#searchedItemsList").on("click", ".listRestID", function(event) {

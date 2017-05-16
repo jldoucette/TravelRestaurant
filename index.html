@@ -16,7 +16,7 @@
     	<div class="row">
 	    	<div class="col-md-6">
 				<div id="siteIntro">
-					<h3 id="introText">This site allows you to search major US cities and search local restaurants by cuisine type, providing a list sorted by rating and displayed on a map. A link to the menu is provided and you can add the restaurants to a city list which is tied to your username and email and displayed upon login! The Top 10 Restaurants are displayed (or less than 10 if the selection or range is limited), based on the distance you are willing to travel.<br><br><strong><em>Enjoy the Experience!</em></strong></h3> 
+					<h3 id="introText">This site allows you to search major US and European cities and search local restaurants by cuisine type, providing a list sorted by rating and displayed on a map. A link to the menu is provided and you can add the restaurants to a list which is tied to your username and email and displayed upon login. The Top 10 Restaurants are displayed (or less than 10 if the selection or range is limited), based on the distance you are willing to travel.<br><br><strong><em>Enjoy the Experience!</em></strong></h3> 
 				</div>
 			</div>
 <!-- 		<div class="col-md-6"> -->
@@ -284,6 +284,30 @@
 				</div>
 
 				<div class="modal-body" id="savedRestaurantMdl">
+					
+				</div>
+
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+</div> 
+
+<div class="modal fade" id="noLoginModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+					</button>
+					<h4 class="modal-title">Oops! You Are Not Logged In!</h4>
+				</div>
+
+				<div class="modal-body" id="noLoginMdl">
+				<h4>You must be logged in to add Restaurants.....login now by entering a username and email address!<h4>
 					
 				</div>
 
