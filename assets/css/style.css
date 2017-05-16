@@ -4,7 +4,7 @@ background-color: #fff8dc;
 margin-left:10px;
 
 }
-
+/*
 .img {
     position: relative;
     align-items:center;
@@ -14,7 +14,7 @@ margin-left:10px;
     background-repeat:   no-repeat;
     background-size:     cover;
 
-}
+}*/
 
 .jumbotron {
 text-align: center;
@@ -30,7 +30,7 @@ background-color: #add8e6;
 }
 #cuisineResultsForCity {
 	height:300px;
-	width:60%;
+	width:80%;
   	overflow-y: scroll;
   	border:2px;
 

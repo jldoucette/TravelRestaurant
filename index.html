@@ -62,14 +62,13 @@
 	
 <!-- </div> -->
 
-		</div>
 		<div class="row">
 			<div class="col-md-3 col">
 	<!-- 			<div id="userDetails">
 				</div> -->
-			<!-- 	<div id="searchedItemsList"></div>
-				<div id="cityToDoList">
-				</div> -->
+				
+			<!-- 	<div id="cityToDoList"> -->
+	
 			<div id="invalidUser"></div>
 
 			  <div class="form-group">
@@ -83,7 +82,11 @@
 			  </div>
 			  <br>			  
 				<button type="submit" class="btn btn-default" id="submitUser"> Submit</button>
+						<div id="searchedItemsHeader"></div>
+						<div id="searchedItemsList"></div>
+			<!-- 	<div id="cityToDoList"> -->	
 			</div>
+
 		
 				<div class="col-md-8 col">
 					<div class="row">
@@ -166,7 +169,7 @@
 				<div id="mapOfRestaurantsHeader">
 				<h3>Mapped Results <small>(X is your location - use map tools to zoom in or out to see all locations if necessary!)</small></h3>
 				</div>
-				<div id="mapOfRestaurants">
+				<div class="well" id="mapOfRestaurants">
 
 				</div>
 			</div>
@@ -270,6 +273,29 @@
 		</div>
 </div>
   
+ <div class="modal fade" id="savedRestaurantModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+					</button>
+					<h4 class="modal-title">Here's the Restaurant Details!</h4>
+				</div>
+
+				<div class="modal-body" id="savedRestaurantMdl">
+					
+				</div>
+
+				<div class="modal-footer">
+					<button type="botton" class="btn btn-default"
+					data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+</div> 
+
 </body>
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"

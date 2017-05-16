@@ -51,7 +51,20 @@
   var mapZoomRate=10;
   var cuisineListAppend;
   var resultsDesired=10; 
-  var zoomSetting=14; 
+  var zoomSetting=14;
+  var listRestaurantName;
+  var listRestaurantAddress;
+  var listRestaurantCity;
+  var listRestaurantCuisines;
+  var listRestaurantMenuURL;
+  var listRestaurantRating;
+  var storedRestaurantName;
+  var storedRestaurantAddress;
+  var storedRestaurantCity;
+  var storedRestaurantCuisines;
+  var storedRestaurantMenuURL;
+  var storedRestaurantRating;
+  var storedTimeStamp;
 
 
   searchData[nameInput]={
@@ -154,11 +167,11 @@ function getRadioValue () {
    
       if (otherInputRegEx.test(searchedLocation)) {
         console.log("Matches RegEx Pattern: True");
-        searchTime=moment().format(); 
-        database.ref("/citySearches/"+nameInput).push({
-        searchedLocation,
-        timeStamp:searchTime
-      });
+      //   searchTime=moment().format(); 
+      //   database.ref("/citySearches/"+nameInput).push({
+      //   searchedLocation,
+      //   timeStamp:searchTime
+      // });
 
         $('#cityInput').val(''); 
       codeAddress();
@@ -183,26 +196,41 @@ function getRadioValue () {
 
       console.log(/^[a-zA-z\s\.]+$/.test(cityInput));
    }
-
+      console.log("Display Search History being run.");
       displaySearchHistory();
 
 });
 
 function displaySearchHistory() {
-   return firebase.database().ref('/citySearches/' + nameInput).limitToLast(3).once('value').then(function(snapshot) {
+   return firebase.database().ref('/citySearches/' + nameInput).once('value').then(function(snapshot) {
   
         // $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
         $("#searchedItemsList").empty();
+        $("#searchedItemsHeader").empty();
+        $("#searchedItemsHeader").append("<h4>List of Saved Restaurants</h4>");
             snapshot.forEach(function(childSnapshot) {
-            var childKey = childSnapshot.key;
-            var childData = childSnapshot.val().searchedLocation;
-            var childTstamp=childSnapshot.val().timeStamp;
-            console.log("Search Key: " + childKey + " Search Data: " + childData + " Timestamp: "+childTstamp);
-        $("#searchedItemsList").prepend("<ul>"+childData+"</ul>");
+            storedRestaurantID=childSnapshot.val().restaurantID,
+            storedRestaurantName=childSnapshot.val().restaurantName,
+            storedRestaurantAddress=childSnapshot.val().restaurantAddress,
+            storedRestaurantCity=childSnapshot.val().restaurantCity,
+            storedRestaurantCuisines=childSnapshot.val().restaurantCuisines,
+            storedRestaurantMenuURL=childSnapshot.val().restaurantMenuURL,
+            storedRestaurantRating=childSnapshot.val().restaurantRating,
+            storedTimeStamp=childSnapshot.val().timeStamp;
+
+            // var childKey = childSnapshot.key;
+            // var childData = childSnapshot.val().searchedLocation;
+            // var childTstamp=childSnapshot.val().timeStamp;
+            console.log("Name: " + storedRestaurantName + " Address: " + storedRestaurantAddress
+             + " City: "+ storedRestaurantCity + " Cuisines: "+storedRestaurantCuisines+" Menu URL: "
+             +storedRestaurantMenuURL+" Rating: "+storedRestaurantRating+" Time: "+storedTimeStamp);
+        $("#searchedItemsList").prepend("<ul><a class='listRestID' href'#' data-restid='"+storedRestaurantID+"'>"+storedRestaurantCity+": "+storedRestaurantName+"</a></ul>");
     });  
  
 });
-  }
+
+}
+
 function getCuisines() {
 
   $("#cuisineResultHeader").show();
@@ -222,7 +250,7 @@ function getCuisines() {
             $("#cuisineResultsForCity").empty();
             cuisineListAppend="<div class='dropdown'>"+
             "<button class='btn btn-default dropdown-toggle cuisines' type='button' data-toggle='dropdown'>" +
-              "Choose One...      <span class='caret'></span></button>"+
+              "Choose One<span class='caret'></span></button>"+
             "<ul class='dropdown-menu'>";
             console.log("First cuisineListAppend is: "+cuisineListAppend);
             // $("#cuisineResultsForCity").append("<div class='dropdown'>"+
@@ -267,7 +295,8 @@ function getCuisines() {
 function runZomatoLatLon() {
   console.log("runZomato Lat "+ locationLat);
   console.log("runZomato Lon "+ locationLon);
-$.ajax({
+
+  $.ajax({
     url: 'https:developers.zomato.com/api/v2.1/search?count='+resultsDesired+'&lat='+locationLat+'&lon='+locationLon+'&cuisines='+cuisineID+'&sort=rating&order=desc&radius='+distanceFromLocation,
     method: 'GET',
     beforeSend: function(request) {
@@ -275,29 +304,29 @@ $.ajax({
     }
 
 }).done(function(response) {
-  console.log(response);
-//Adding check for zero results
-if (response.results_found==0) {
-  console.log("NO RESULTS FOR THAT CUISINE");
-   $('#noResultsMdl').empty();
+      console.log(response);
+      //Adding check for zero results
+      if (response.results_found==0) {
+            console.log("NO RESULTS FOR THAT CUISINE");
+        $('#noResultsMdl').empty();
         $('#noResultsModal').modal('show');
         $('#noResultsMdl').append("<h3>No Restaurants Found With Your Search Parameters with that Cuisine</h3>" + 
           "<h4>Unfortuantely we did not find any restaurants serving "+cuisineName+" cuisine within the search radius or city.</h4>" +
           "<p>Select a different cuisine from the left drop-down menu or start your search over." + 
           " The cuisine selections cover the entire city, there may not be a restaurant nearby serving that specific cuisine.</p>");
-}
+        }
 
 
-   $("#resultsArea").show();
-   $("#restaurantList").show();
-   $("#restaurantListHeader").show();
-   $("#mapOfRestaurantsHeader").show();
-   $("#mapOfRestaurants").show();
-   $("#restaurantList").empty();
-   $("#restaurantListHeader").empty();   
-   $("#processingMessage").empty().hide();
-   $("#restaurantList").focus();
-   $("#restaurantListHeader").append("<h4>Top "+resultsDesired+" "+ cuisineName+" Restaurant Results (If necessary, please scroll down for full list!)</h4><ol>");
+       $("#resultsArea").show();
+       $("#restaurantList").show();
+       $("#restaurantListHeader").show();
+       $("#mapOfRestaurantsHeader").show();
+       $("#mapOfRestaurants").show();
+       $("#restaurantList").empty();
+       $("#restaurantListHeader").empty();   
+       $("#processingMessage").empty().hide();
+       $("#restaurantList").focus();
+       $("#restaurantListHeader").append("<h4>Top "+resultsDesired+" "+ cuisineName+" Restaurant Results (If necessary, please scroll down for full list!)</h4><ol>");
         console.log("initMap started locationLat "+ locationLat + " locationLon "+ locationLon);
         var cityLocation = {lat: locationLat, lng: locationLon};
         var map = new google.maps.Map(document.getElementById('mapOfRestaurants'), {
@@ -310,73 +339,75 @@ if (response.results_found==0) {
           label: 'X'
         });
 
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var labelIndex = 0;      
-    response.restaurants.forEach(function(restaurantInfo,index){
-    restaurantName=response.restaurants[index].restaurant.name;
-    restaurantAddress=response.restaurants[index].restaurant.location.address;
-    restaurantRating=response.restaurants[index].restaurant.user_rating.aggregate_rating;
-    restaurantCuisines=response.restaurants[index].restaurant.cuisines;
-    restaurantMenuURL=response.restaurants[index].restaurant.menu_url;
-    var labelMarkerLetter=labels[labelIndex++ % labels.length];
-    var restaurantLat=response.restaurants[index].restaurant.location.latitude;
-    var restaurantLon=response.restaurants[index].restaurant.location.longitude;
-    var latLng = new google.maps.LatLng(restaurantLat,restaurantLon);
-    var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">'+restaurantName+'</h1>'+
-            '<div id="bodyContent">'+
-            '<p><br><strong>Rating: </strong>'+
-    restaurantRating + '<br><strong>Address: </strong>' + 
-    restaurantAddress + '<br><strong>Restaurant Cuisine(s): </strong>' + 
-    restaurantCuisines +'</li><br></p>'+
-            '<p>Menu (opens in new tab): <a href='+restaurantMenuURL+' target="_blank">'+
-            restaurantName+
-            '</a><br>'+
-            '</div>'+
-            '</div>';
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-        });
-    var marker = new google.maps.Marker({
-            position: latLng,
-            map: map,
-            label: labelMarkerLetter,
-            title: restaurantName
-          });
-    marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-        
-        console.log(restaurantName);
-        console.log(restaurantAddress);
-        console.log(restaurantRating);
-        console.log(restaurantCuisines);
-
-
-
+            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var labelIndex = 0;      
+            response.restaurants.forEach(function(restaurantInfo,index){
+            restaurantName=response.restaurants[index].restaurant.name;
+            restaurantAddress=response.restaurants[index].restaurant.location.address;
+            restaurantCity=response.restaurants[index].restaurant.location.city;
+            restaurantRating=response.restaurants[index].restaurant.user_rating.aggregate_rating;
+            restaurantCuisines=response.restaurants[index].restaurant.cuisines;
+            restaurantMenuURL=response.restaurants[index].restaurant.menu_url;
+            restaurantID=response.restaurants[index].restaurant.id;
+            var labelMarkerLetter=labels[labelIndex++ % labels.length];
+            var restaurantLat=response.restaurants[index].restaurant.location.latitude;
+            var restaurantLon=response.restaurants[index].restaurant.location.longitude;
+            var latLng = new google.maps.LatLng(restaurantLat,restaurantLon);
+            var contentString = '<div id="content">'+
+                    '<div id="siteNotice">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">'+restaurantName+'</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><br><strong>Rating: </strong>'+
+            restaurantRating + '<br><strong>Address: </strong>' + 
+            restaurantAddress + '<br><strong>Restaurant Cuisine(s): </strong>' + 
+            restaurantCuisines +'</li><br></p>'+
+                    '<p>Menu (opens in new tab): <a href='+restaurantMenuURL+' target="_blank">'+
+                    restaurantName+
+                    '</a><br>'+
+                    '</div>'+
+                    '</div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+                });
+            var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    label: labelMarkerLetter,
+                    title: restaurantName
+                  });
+            marker.addListener('click', function() {
+                  infowindow.open(map, marker);
+                });
+                
+                console.log(restaurantName);
+                console.log(restaurantAddress);
+                console.log(restaurantRating);
+                console.log(restaurantCuisines);
 
 
     $("#restaurantList").append("<li class='restaurantList'><strong>"+labelMarkerLetter+". Restaurant: </strong>"+ 
       restaurantName+"<br><strong>Rating: </strong>"+
       restaurantRating + "<br><strong>Address: </strong>" + 
       restaurantAddress + "<br><strong>Restaurant Cuisine(s): </strong>" + 
-      restaurantCuisines + "<br><strong>Restaurant Menu Link (opens in new tab): <a href='"+restaurantMenuURL+
-      "' target='_blank'>"+restaurantName+"</a></li><br>");
+      restaurantCuisines + "<br><strong>Restaurant Menu Link (opens in new tab):</strong><a href='"+restaurantMenuURL+
+      "' target='_blank'>"+restaurantName+"</a><br>"+
+      "<button class='btn btn-default btn-xs addButton'" +  
+      " data-restaurantid="+restaurantID+  
+      ">Add to List</button>" + 
+      "</li><br>");
+    console.log("Rest ID "+ restaurantID);
 
-// </p>'+
-//             '<p>Menu (opens in new tab): <a href='+restaurantMenuURL+' target="_blank">'+
-//             restaurantName+
-//             '</a><br>'+
-
-//       "<br><strong>Restaurant Menu Link: </strong>" +
-//       restaurantMenuURL + "</li><br>");
-//     // console.log(restaurantPriceRange);
     $("#restaurantList").append("</ol>");
       });
   });
 }
+
+
+
+ 
+
+
 
 var geocoder;
   function initialize() {
@@ -439,22 +470,124 @@ function codeAddress() {
         $('#noAddMdl').append("<h3>No results found using that address, try again!</h3>" 
           + "<p>The address you entered is: "+address+ ".</p>" + 
           "<h4>Hint: Try a more specific, valid address</h4>");
-        // $("#errorMessage").prepend("<h4>No results found using that address, try again!</h4>" 
-        //   + "<h5>Hint: Try a more specific, valid address</h5>");
-        // setTimeout(function() {
-        //   console.log("continue after timer");
-        //   $("#errorMessage").empty();
-        //   $('#cityInput').val(''); 
-        // }, 5000);
-      // else {
-      //   alert('Geocode was not successful for the following reason: ' + status);
-      // }
+
       }
     });
 
   }
 
+  $("#restaurantList").on("click", ".addButton", function(event) {
+      event.preventDefault();
+    selectedRestaurant=this;
+    console.log("Clicked Button");
+    var dataRestID=$(this).attr("data-restaurantid"); 
+    console.log("dataRestID "+ dataRestID);   
+   //    if (otherInputRegEx.test(searchedLocation)) {
+   //      console.log("Matches RegEx Pattern: True");
+
+  $.ajax({
+            url: 'https://developers.zomato.com/api/v2.1/restaurant?res_id='+dataRestID,
+            method: 'GET',
+            beforeSend: function(request) {
+              request.setRequestHeader('user-key', '0479a7ed872a00d5eefcde91517a433d');
+            }
+          }).done(function(response) {
+              console.log(response);
+              listRestaurantName=response.name;
+              listRestaurantAddress=response.location.address;
+              listRestaurantCity=response.location.city;
+              listRestaurantCuisines=response.cuisines;
+              listRestaurantMenuURL=response.menu_url;
+              listRestaurantRating=response.user_rating.aggregate_rating;
+
+              console.log(listRestaurantName);
+              console.log(listRestaurantAddress);
+              console.log(listRestaurantCity);
+              console.log(listRestaurantCuisines);
+              console.log(listRestaurantMenuURL);
+              console.log(listRestaurantRating);
+
+
+
+              addTime=moment().format(); 
+              database.ref("/citySearches/"+nameInput).push({
+              restaurantID:dataRestID,
+              restaurantName:listRestaurantName,
+              restaurantAddress:listRestaurantAddress,
+              restaurantCity:listRestaurantCity,
+              restaurantCuisines:listRestaurantCuisines,
+              restaurantMenuURL:listRestaurantMenuURL,
+              restaurantRating:listRestaurantRating,
+              timeStamp:addTime
+              }); 
+              displaySearchHistory();
+
+          });
+
+        });
+
+
+  $("#searchedItemsList").on("click", ".listRestID", function(event) {
+      event.preventDefault();
+    selectedRestaurant=this;
+    console.log("Clicked Button");
+    var dataRestID=$(this).attr("data-restid"); 
+    console.log("dataRestID "+ dataRestID);   
+
+return firebase.database().ref('/citySearches/' + nameInput).once('value').then(function(snapshot) {
+  
+        // $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
+        $("#searchedItemsList").empty();
+        $("#searchedItemsHeader").empty();
+        $("#searchedItemsHeader").append("<h4>List of Saved Restaurants</h4>");
+            snapshot.forEach(function(childSnapshot) {
+            storedRestaurantID=childSnapshot.val().restaurantID,
+            storedRestaurantName=childSnapshot.val().restaurantName,
+            storedRestaurantAddress=childSnapshot.val().restaurantAddress,
+            storedRestaurantCity=childSnapshot.val().restaurantCity,
+            storedRestaurantCuisines=childSnapshot.val().restaurantCuisines,
+            storedRestaurantMenuURL=childSnapshot.val().restaurantMenuURL,
+            storedRestaurantRating=childSnapshot.val().restaurantRating,
+            storedTimeStamp=childSnapshot.val().timeStamp;
+
+            // var childKey = childSnapshot.key;
+            // var childData = childSnapshot.val().searchedLocation;
+            // var childTstamp=childSnapshot.val().timeStamp;
+            if (storedRestaurantID==dataRestID) {
+            console.log("Name: " + storedRestaurantName + " Address: " + storedRestaurantAddress
+             + " City: "+ storedRestaurantCity + " Cuisines: "+storedRestaurantCuisines+" Menu URL: "
+             +storedRestaurantMenuURL+" Rating: "+storedRestaurantRating+" Time: "+storedTimeStamp);
+            $('#savedRestaurantModal').modal('show');
+
+            var contentString = '<div id="content">'+
+                                '<div id="siteNotice">'+
+                                '</div>'+
+                                '<h1 id="firstHeading" class="firstHeading">'+storedRestaurantName+'</h1>'+
+                                '<div id="bodyContent">'+
+                                '<p><br><strong>Rating: </strong>'+
+                                storedRestaurantRating + '<br><strong>Address: </strong>' + 
+                                storedRestaurantAddress + '<br><strong>Restaurant Cuisine(s): </strong>' + 
+                                storedRestaurantCuisines +'</li><br></p>'+
+                                '<p>Menu (opens in new tab): <a href='+storedRestaurantMenuURL+' target="_blank">'+
+                                storedRestaurantName+
+                                '</a><br>'+
+                                '</div>'+
+                                '</div>';
+
+
+
+        $('#savedRestaurantMdl').append(contentString);
+        // $('#savedRestaurantMdl').append("<h3>"+storedRestaurantName+" "+storedRestaurantAddress+"</h3>");
+          }
+
+        // $("#searchedItemsList").prepend("<ul><a class='listRestID' href'#' data-restid='"+storedRestaurantID+"'>"+storedRestaurantCity+": "+storedRestaurantName+"</a></ul>");
+    });  
+ 
+});
+});
+
   initialize();
   // distanceRadio();
 
 });
+
