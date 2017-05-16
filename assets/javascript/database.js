@@ -225,7 +225,7 @@
     function runZomatoLatLon() {
 
       $.ajax({
-        url: 'https:developers.zomato.com/api/v2.1/search?count='+resultsDesired+'&lat='+locationLat+'&lon='+locationLon+'&cuisines='+cuisineID+'&sort=rating&order=desc&radius='+distanceFromLocation,
+        url: 'https://developers.zomato.com/api/v2.1/search?count='+resultsDesired+'&lat='+locationLat+'&lon='+locationLon+'&cuisines='+cuisineID+'&sort=rating&order=desc&radius='+distanceFromLocation,
         method: 'GET',
         beforeSend: function(request) {
         request.setRequestHeader('user-key', '0479a7ed872a00d5eefcde91517a433d');
