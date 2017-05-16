@@ -74,11 +74,9 @@
           event.preventDefault();
           nameInput= $("#userName").val().trim();
           emailInput= $("#email").val().trim();
-          console.log("Name eval "+ otherInputRegEx.test(nameInput) + " Email Eval: " + emailInputRegEx.test(emailInput));
+         
           
           if ((otherInputRegEx.test(nameInput)) && (emailInputRegEx.test(emailInput))) {
-              console.log("Submit username value of nameInput: "+nameInput);
-              console.log("Submit email value of emailInput: "+emailInput);
               data[nameInput]={
               name:nameInput,
               email:emailInput
@@ -94,9 +92,6 @@
     }
 
       else {
-      console.log("Epic Fail");
-
-      console.log("Does NOT match RegEx: False");
             $('#badUserPassMdl').empty();
             $('#badUserPassModal').modal('show');
             $('#badUserPassMdl').append("<h3>An invalid username or email was entered, no special characters are allowed, try again!</h3>" + 
@@ -122,7 +117,6 @@
 
         $('input[name=distance]:radio').click( function() {
             distanceFromLocation = getRadioValue();
-            console.log("new input distance is "+distanceFromLocation);
             if(distanceFromLocation==1609) {
               zoomSetting=15;
             }
@@ -144,30 +138,20 @@
           event.preventDefault();
         initializePreResults();
          searchedLocation= $("#cityInput").val().trim();
-         console.log("City that was input "+ searchedLocation);
        
           if (otherInputRegEx.test(searchedLocation)) {
-            console.log("Matches RegEx Pattern: True");
-
-
             $('#cityInput').val(''); 
           codeAddress();
           }
 
           else {
-            console.log("Does NOT match RegEx: False");
             $('#badSearchMdl').empty();
             $('#badSearchModal').modal('show');
             $('#badSearchMdl').append("<h3>Invalid Search address, try again!</h3>" + 
               "<h4>Hint: Only letters, commas and periods allowed, no special characters</h4>");
             $('#cityInput').val(''); 
-      
-
-
-          console.log(/^[a-zA-z\s\.]+$/.test(cityInput));
           }
 
-          console.log("Display Search History being run.");
           displaySearchHistory();
       });
 
@@ -186,9 +170,6 @@
                 storedRestaurantMenuURL=childSnapshot.val().restaurantMenuURL,
                 storedRestaurantRating=childSnapshot.val().restaurantRating,
                 storedTimeStamp=childSnapshot.val().timeStamp;
-                console.log("Name: " + storedRestaurantName + " Address: " + storedRestaurantAddress
-                 + " City: "+ storedRestaurantCity + " Cuisines: "+storedRestaurantCuisines+" Menu URL: "
-                 +storedRestaurantMenuURL+" Rating: "+storedRestaurantRating+" Time: "+storedTimeStamp);
             $("#searchedItemsList").prepend("<ul><a class='listRestID' href'#' data-restid='"+storedRestaurantID+"'>"+storedRestaurantCity+": "+storedRestaurantName+"</a></ul>");
             });  
     
@@ -199,8 +180,6 @@
     function getCuisines() {
       $("#cuisineResultHeader").show();
       $("#cuisineResultsForCity").show();
-      console.log("getCuisines Lat "+locationLat);
-      console.log("getCuisines Lon "+locationLon);
           zomatoSearchLocation="?lat="+locationLat+"&lon="+locationLon;
             $.ajax({
               url: 'https://developers.zomato.com/api/v2.1/cuisines'+zomatoSearchLocation,
@@ -209,26 +188,19 @@
                 request.setRequestHeader('user-key', '0479a7ed872a00d5eefcde91517a433d');
               }
             }).done(function(response) {
-                console.log(response);
 
                 $("#cuisineResultsForCity").empty();
                 cuisineListAppend="<div class='dropdown'>"+
                 "<button class='btn btn-default dropdown-toggle cuisines' type='button' data-toggle='dropdown'>" +
                   "Choose One<span class='caret'></span></button>"+
                 "<ul class='dropdown-menu'>";
-                console.log("First cuisineListAppend is: "+cuisineListAppend);
-                  response.cuisines.forEach(function(cuisineInfo,index){
-                  cuisineName=response.cuisines[index].cuisine.cuisine_name;
-                  cuisineID=response.cuisines[index].cuisine.cuisine_id;
-                  console.log("Cuisine Name: "+cuisineName);
-                  console.log("Cuisine ID: "+cuisineID);
-              
+                response.cuisines.forEach(function(cuisineInfo,index){
+                cuisineName=response.cuisines[index].cuisine.cuisine_name;
+                cuisineID=response.cuisines[index].cuisine.cuisine_id;              
                 cuisineListAppend+="<li class='cuisineResult'><a class='cuisineList' href'#' data-cuisineID="+cuisineID+" data-cuisineName="+cuisineName+">"+cuisineName+"</a></li>";
                 });
-                   console.log("Second cuisineListAppend is: "+cuisineListAppend);
-
+                
                 cuisineListAppend+="</ul>"+"</div>";
-                console.log("Last cuisineListAppend is "+cuisineListAppend);
                 $("#cuisineResultsForCity").append(cuisineListAppend);
                 $('html, body').animate({
                 scrollTop: $("#cuisineResultsForCity").offset().top
@@ -238,14 +210,10 @@
                
                 $('#cuisineResultsForCity').on('click', '.cuisineList',function(event) {  
                   event.preventDefault();
-                  selectedCuisine=this;
-                
-                  console.log("Waiting for click on cuisineList");
-                  console.log("selectedCuisine is: " + selectedCuisine);   
+                  selectedCuisine=this;            
                   cuisineName=$(this).attr('data-cuisinename');
                   cuisineID=$(this).attr('data-cuisineid');
                   searchedLocation= $("#cityInput").val().trim();
-                  console.log("Selected Cuisine ID: "+cuisineID +" Selected Cuisine Name: "+cuisineName);
                   $("#processingMessage").empty().show();
 
                   $("#processingMessage").append("<h3><em>Processing Results for "+cuisineName+"...</em></h3>");
@@ -255,8 +223,6 @@
     }
         
     function runZomatoLatLon() {
-      console.log("runZomato Lat "+ locationLat);
-      console.log("runZomato Lon "+ locationLon);
 
       $.ajax({
         url: 'https:developers.zomato.com/api/v2.1/search?count='+resultsDesired+'&lat='+locationLat+'&lon='+locationLon+'&cuisines='+cuisineID+'&sort=rating&order=desc&radius='+distanceFromLocation,
@@ -266,9 +232,7 @@
         }
 
     }).done(function(response) {
-          console.log(response);
           if (response.results_found==0) {
-                console.log("NO RESULTS FOR THAT CUISINE");
             $('#noResultsMdl').empty();
             $('#noResultsModal').modal('show');
             $('#noResultsMdl').append("<h3>No Restaurants Found With Your Search Parameters with that Cuisine</h3>" + 
@@ -276,7 +240,6 @@
               "<p>Select a different cuisine from the left drop-down menu or start your search over." + 
               " The cuisine selections cover the entire city, there may not be a restaurant nearby serving that specific cuisine.</p>");
             }
-
 
            $("#resultsArea").show();
            $("#restaurantList").show();
@@ -288,7 +251,6 @@
            $("#processingMessage").empty().hide();
            $("#restaurantList").focus();
            $("#restaurantListHeader").append("<h4>Top "+resultsDesired+" "+ cuisineName+" Restaurant Results (If necessary, please scroll down for full list!)</h4><ol>");
-            console.log("initMap started locationLat "+ locationLat + " locationLon "+ locationLon);
             var cityLocation = {lat: locationLat, lng: locationLon};
             var map = new google.maps.Map(document.getElementById('mapOfRestaurants'), {
               zoom: zoomSetting,
@@ -340,13 +302,6 @@
                 marker.addListener('click', function() {
                       infowindow.open(map, marker);
                     });
-                    
-                    console.log(restaurantName);
-                    console.log(restaurantAddress);
-                    console.log(restaurantRating);
-                    console.log(restaurantCuisines);
-
-
         $("#restaurantList").append("<li class='restaurantList'><strong>"+labelMarkerLetter+". Restaurant: </strong>"+ 
           restaurantName+"<br><strong>Rating: </strong>"+
           restaurantRating + "<br><strong>Address: </strong>" + 
@@ -357,18 +312,11 @@
           " data-restaurantid="+restaurantID+  
           ">Add to List</button>" + 
           "</li><br>");
-        console.log("Rest ID "+ restaurantID);
 
         $("#restaurantList").append("</ol>");
           });
       });
     }
-
-
-
-     
-
-
 
     var geocoder;
       function initialize() {
@@ -400,25 +348,16 @@
     }
 
     function codeAddress() {
-        console.log("Start codeAddress");
         var address = searchedLocation;
         geocoder.geocode( { 'address': address,
 
       }, function(results, status) {
-          console.log("Status "+status);
-          console.log("results "+results);
           if ((status == 'OK') && (results[0].geometry.location_type!='APPROXIMATE')) {
-            console.log(status);
-            console.log(results); 
             locationLat=results[0].geometry.location.lat();
             locationLon=results[0].geometry.location.lng();
-            console.log("codeAddress Lat is "+locationLon);
-            console.log("codeAddress Lon is " +locationLat);
             getCuisines();
-            console.log("Ran getCuisines from codeAddress");
           }
            else {
-            console.log("No address found in codeAddress");
             $('#noAddMdl').empty();
             $('#noAddressModal').modal('show');
             $('#noAddMdl').append("<h3>No results found using that address, try again!</h3>" 
@@ -435,14 +374,11 @@
 
           if(nameInput=="Guest") {
             $("#noLoginModal").modal('show');
-            console.log("Must be logged in to add restaurants.");
           }
           else {
 
         selectedRestaurant=this;
-        console.log("Clicked Button");
         var dataRestID=$(this).attr("data-restaurantid"); 
-        console.log("dataRestID "+ dataRestID);   
 
 
       $.ajax({
@@ -452,23 +388,12 @@
                   request.setRequestHeader('user-key', '0479a7ed872a00d5eefcde91517a433d');
                 }
               }).done(function(response) {
-                  console.log(response);
                   listRestaurantName=response.name;
                   listRestaurantAddress=response.location.address;
                   listRestaurantCity=response.location.city;
                   listRestaurantCuisines=response.cuisines;
                   listRestaurantMenuURL=response.menu_url;
                   listRestaurantRating=response.user_rating.aggregate_rating;
-
-                  console.log(listRestaurantName);
-                  console.log(listRestaurantAddress);
-                  console.log(listRestaurantCity);
-                  console.log(listRestaurantCuisines);
-                  console.log(listRestaurantMenuURL);
-                  console.log(listRestaurantRating);
-
-
-
                   addTime=moment().format(); 
                       searchData[dataRestID]={
                       restaurantID:dataRestID,
@@ -494,13 +419,10 @@
       $("#searchedItemsList").on("click", ".listRestID", function(event) {
           event.preventDefault();
         selectedRestaurant=this;
-        console.log("Clicked Button");
         var dataRestID=$(this).attr("data-restid"); 
-        console.log("dataRestID "+ dataRestID);  
        fbRestID=dataRestID
 
     return firebase.database().ref('/citySearches/' + nameInput).once('value').then(function(snapshot) {
-            console.log("Firebase result" + snapshot);
             
                 snapshot.forEach(function(childSnapshot) {
                 storedRestaurantID=childSnapshot.val().restaurantID,
@@ -514,15 +436,13 @@
 
      
                 if (storedRestaurantID==dataRestID) {
-                console.log("Name: " + storedRestaurantName + " Address: " + storedRestaurantAddress
-                 + " City: "+ storedRestaurantCity + " Cuisines: "+storedRestaurantCuisines+" Menu URL: "
-                 +storedRestaurantMenuURL+" Rating: "+storedRestaurantRating+" Time: "+storedTimeStamp);
                 $('#savedRestaurantModal').modal('show');
 
                 var contentString = '<div id="content">'+
                                     '<div id="siteNotice">'+
                                     '</div>'+
-                                    '<h1 id="firstHeading" class="firstHeading">'+storedRestaurantName+'</h1>'+
+                                    '<h1 id="firstHeading" class="firstHeading">'+
+                                    storedRestaurantName+'</h1>'+
                                     '<div id="bodyContent">'+
                                     '<p><br><strong>Rating: </strong>'+
                                     storedRestaurantRating + '<br><strong>Address: </strong>' + 
