@@ -537,9 +537,9 @@ function codeAddress() {
 return firebase.database().ref('/citySearches/' + nameInput).once('value').then(function(snapshot) {
   
         // $("#userDetails").html("<h2>Welcome "+nameInput+"!</h2><h4>Your registered email is "+emailInput+"</h4>");
-        $("#searchedItemsList").empty();
-        $("#searchedItemsHeader").empty();
-        $("#searchedItemsHeader").append("<h4>List of Saved Restaurants</h4>");
+        // $("#searchedItemsList").empty();
+        // $("#searchedItemsHeader").empty();
+        // $("#searchedItemsHeader").append("<h4>List of Saved Restaurants</h4>");
             snapshot.forEach(function(childSnapshot) {
             storedRestaurantID=childSnapshot.val().restaurantID,
             storedRestaurantName=childSnapshot.val().restaurantName,
@@ -576,6 +576,7 @@ return firebase.database().ref('/citySearches/' + nameInput).once('value').then(
 
 
 
+        $('#savedRestaurantMdl').empty();        
         $('#savedRestaurantMdl').append(contentString);
         // $('#savedRestaurantMdl').append("<h3>"+storedRestaurantName+" "+storedRestaurantAddress+"</h3>");
           }
